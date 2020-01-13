@@ -12,13 +12,13 @@ Use Node.js and Express to build an API that performs CRUD operations on users.
 
 ### Download Project Files and Install Dependencies
 
-- **Fork** and **Clone** this repository.
-- **CD into the folder** where you cloned the repository.
-- Type `npm install` to download all dependencies listed inside `package.json`.
+- [X] **Fork** and **Clone** this repository.
+- [X] **CD into the folder** where you cloned the repository.
+- [X]Type `npm install` to download all dependencies listed inside `package.json`.
 
 ### Database access
 
-Database access will be done using the `db.js` file included inside the `data` folder. This file publishes the following methods:
+[X] Database access will be done using the `db.js` file included inside the `data` folder. This file publishes the following methods:
 
 - `find()`: calling find returns a promise that resolves to an array of all the users contained in the database.
 - `findById()`: this method expects an `id` as it's only parameter and returns the user corresponding to the `id` provided or an empty array if no user with that `id` is found.
@@ -53,7 +53,7 @@ Inside `index.js` add the code necessary to implement the following _endpoints_:
 
 | Method | URL            | Description                                                                                                                       |
 | ------ | -------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| POST   | /api/users     | Creates a user using the information sent inside the `request body`.                                                              |
+| POST   |      | Creates a user using the information sent inside the `request body`.                                                              |
 | GET    | /api/users     | Returns an array of all the user objects contained in the database.                                                               |
 | GET    | /api/users/:id | Returns the user object with the specified `id`.                                                                                  |
 | DELETE | /api/users/:id | Removes the user with the specified `id` and returns the deleted user.                                                            |
