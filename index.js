@@ -135,40 +135,55 @@ server.delete('/api/users/:id', (req, res) => {
         
 })
 
-
-
-
 //Update A User
 
 // | PUT    | /api/users/:id | Updates the user with the specified `id` using data from the `request body`. Returns the modified document, **NOT the original**. |
 // When the client makes a `PUT` request to `/api/users/:id`:
-// -`update()`: accepts two arguments, the first is the `id` of the user to update and the second is an object with the `changes`
-// to apply.It returns the count of updated records.If the count is 1 it means the record was updated correctly.
+// - `update()`: accepts two arguments, the first is the `id` of the user to update and the second is an object with the `changes` to apply. It returns the count of updated records. If the count is 1 it means the record was updated correctly.
 
 server.put('/api/users/:id', (req, res) => {
-    const {id} = request.body
-    // - If the user is found and the new information is valid:
-    //   - update the user document in the database using the new information sent in the `request body`.
-    //   - respond with HTTP status code `200` (OK).
-    //   - return the newly updated _user document_.
-    dBase.update(id)
-    .then(user => {
-        
-    })
+    const id = req.params.id;
+      const { name, bio } = req.body; 
+       if (!name || !bio) {
+           return res.status(400).json({ 
+               errorMessage: "Please provide name and bio for the user."
+           })
+       }
+       dBase.update(id, {name, bio})
+       .then(userUpdate => {
+           if(userUpdate) {
+               dBase.findById(id)
+                .then(user => {
+                    res.status(201).json(user)
+                })
+           }else{
+               res.status(404).json({
+                   errorMessage: "The user with the specified ID does not exist."
+               })
+           }
+       })
+       .catch(err => {
+           res.status(500).json({
+               errorMessage: "The user information could not be modified."
+           })
+       })
 })
+
+ // - If the request body is missing the `name` or `bio` property:
+ //   - respond with HTTP status code `400` (Bad Request).
+ //   - return the following JSON response: `{ errorMessage: "Please provide name and bio for the user." }`.
 
 // - If the _user_ with the specified `id` is not found:
 //   - respond with HTTP status code `404` (Not Found).
 //   - return the following JSON object: `{ message: "The user with the specified ID does not exist." }`.
 
-// - If the request body is missing the `name` or `bio` property:
-//   - respond with HTTP status code `400` (Bad Request).
-//   - return the following JSON response: `{ errorMessage: "Please provide name and bio for the user." }`.
-
 // - If there's an error when updating the _user_:
 //   - respond with HTTP status code `500`.
 //   - return the following JSON object: `{ errorMessage: "The user information could not be modified." }`.
-
+// - If the user is found and the new information is valid:
+//   - update the user document in the database using the new information sent in the `request body`.
+//   - respond with HTTP status code `200` (OK).
+//   - return the newly updated _user document_
 
 
 
