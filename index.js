@@ -185,6 +185,6 @@ server.put('/api/users/:id', (req, res) => {
 //   - respond with HTTP status code `200` (OK).
 //   - return the newly updated _user document_
 
+const port = process.env.PORT || 5000;
 
-
-server.listen(5000, () => console.log('API running on port 5000'));
+server.listen(port, () => console.log(`\n*** Server Running on http://localhost:${port} ***\n`));
